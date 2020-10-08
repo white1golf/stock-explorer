@@ -1,0 +1,40 @@
+.container {
+  width: 90%; //양쪽 터치 안함.
+  //max-width: 65em; //1040px
+  margin: 0 auto; //중앙정렬
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+// 미디어 쿼리를 사용하지 않고 화면 크기에 따라 flex의 배열을
+//동적으로 변경하는 클래스.
+.split {
+  display: flex;
+  //gap의 경우 사파리에선 아직 지원하지 않음. (grid에선 지원함.)
+  //신기한건 각 요소들 사이의 틈을 매우기 때문에 wrap으로 아래로
+  //내려가서 줄이 생기면 그 줄 사이를 2em으로 띄움.
+  gap: 2em;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  //img를 감싸는 div를 만들면 img는 100% block이었기 때문에
+  //div의 크기가 변경되면 img또한 알아서 변경됨. 이때 flexitem 인 div의
+  // 최소한의 크기를 min-width로 설정해주며 flex-basis로 각각의 요소마다
+  // 할당할 퍼센테이지를 설정함.
+  & > * {
+    flex-basis: 30%;
+    min-width: 15em;
+  }
+}
+
+//spacing이 붙은 태그의 자식들 중에서 첫번째 자식을 제외한 나머지 자식들의 위에는
+//--spacer 값 만큼의 margin이 붙으며 --spacer 값이 설정되있지 않으면 기본 2rem이 붙는다.
+//추천하는 reusable class라 한다.
+.spacing > * + * {
+  margin-top: var(--spacer, 2rem);
+}

@@ -1,0 +1,94 @@
+@import '../utils/all';
+
+$navbar-height: 3.25rem !default;
+$navbar-brand-logo-height: 60px !default;
+$navbar-item-color: $text !default;
+$navbar-item-hover-color: $primary !default;
+$navbar-background-color: white;
+$navbar-active-menu-color: $navbar-background-color;
+$navbar-burger-color: $navbar-item-color !default;
+
+$navbar-breakpoint: $tablet !default;
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  min-height: 65px;
+  .logo {
+  }
+  @include until($navbar-breakpoint) {
+    & > .container {
+      flex-direction: column;
+    }
+  }
+  &-end {
+    display: flex;
+    flex-direction: column;
+
+    @include until($navbar-breakpoint) {
+      padding: 1rem 0rem;
+      width: 100%;
+      & > * + * {
+        margin-top: 1rem;
+      }
+    }
+
+    @include from($navbar-breakpoint) {
+      margin-left: auto;
+      flex-direction: row;
+      & > * + * {
+        margin-left: 2rem;
+      }
+    }
+  }
+  &-menu {
+    display: none;
+    background-color: $navbar-active-menu-color;
+    width: 100%;
+    @include until($navbar-breakpoint) {
+      &.is-active {
+        display: flex;
+      }
+    }
+    @include from($navbar-breakpoint) {
+      display: flex;
+    }
+  }
+  &-item {
+    &:hover,
+    &:focus {
+      color: $navbar-item-hover-color;
+    }
+    color: $primary;
+    font-size: 1.3em;
+  }
+  &-brand {
+    display: flex;
+    align-items: stretch;
+    flex-shrink: 0;
+    justify-content: center;
+    min-height: $navbar-brand-logo-height;
+    @include until($navbar-breakpoint) {
+      width: 100%;
+      align-items: center;
+    }
+  }
+  &-burger {
+    transition-duration: $speed;
+    transition-property: border-radius;
+    transition-timing-function: $easing;
+    &.is-active {
+      border-radius: 50% 50%;
+    }
+    &:hover,
+    &:focus {
+      color: $navbar-item-hover-color;
+    }
+    //hamburger mixin.
+    @include hamburger(52px /*임시 변수*/);
+    margin-left: auto;
+    @include from($navbar-breakpoint) {
+      display: none;
+    }
+  }
+}

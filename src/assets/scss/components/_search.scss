@@ -1,0 +1,62 @@
+@import '../utils/all';
+
+$search-border-color: #3f3f3f;
+$search-icon-background: #cfcfcf;
+$icon-background-size: 2.5rem;
+$icon-size: 1rem;
+
+.search {
+  &.is-active {
+    .wrapper {
+      border: 1px solid $dark;
+      &:hover {
+        border: 1px solid $dark;
+      }
+    }
+  }
+  .wrapper {
+    display: flex;
+    border: 1px solid $border;
+    padding: 0.2rem 1rem;
+    padding-right: 0.2rem;
+    gap: 2rem;
+    border-radius: 2rem;
+    &:hover {
+      border: 1px solid $border-hover;
+    }
+  }
+  .input {
+    width: 400px;
+    border: none;
+    outline: none;
+  }
+  .icon {
+    display: inline-block;
+    position: relative;
+    color: $text-light;
+    border-radius: 50%;
+    width: $icon-background-size;
+    height: $icon-background-size;
+    font-size: $icon-size;
+    i.fa-times-circle {
+      background-color: $search-icon-background;
+    }
+    i::before {
+      position: absolute;
+      left: 30%;
+      top: 30%;
+    }
+    &:hover {
+      i.fa-times-circle {
+        color: $primary;
+      }
+    }
+  }
+
+  &.is-active {
+    .wrapper {
+    }
+    .input {
+    }
+  }
+}

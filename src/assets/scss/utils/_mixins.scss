@@ -1,0 +1,137 @@
+@mixin hamburger($dimensions) {
+  cursor: pointer;
+  display: block;
+  height: $dimensions;
+  position: relative;
+  width: $dimensions;
+  span {
+    background-color: currentColor;
+    display: block;
+    height: 3px;
+    left: calc(50% - 16px);
+    position: absolute;
+    transform-origin: center;
+    transition-duration: $speed;
+    transition-property: background-color, opacity, transform;
+    transition-timing-function: $easing;
+    width: 32px;
+    &:nth-child(1) {
+      top: calc(50% - 12px);
+    }
+    &:nth-child(2) {
+      top: calc(50% - 2px);
+    }
+    &:nth-child(3) {
+      top: calc(50% + 8px);
+    }
+  }
+  &:hover {
+    background-color: rgba(black, 0.05);
+  }
+  // Modifers
+  &.is-active {
+    span {
+      &:nth-child(1) {
+        transform: translateY(10px) rotate(45deg);
+      }
+      &:nth-child(2) {
+        opacity: 0;
+      }
+      &:nth-child(3) {
+        transform: translateY(-10px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+//responsiveness
+
+@mixin from($device) {
+  @media screen and (min-width: $device) {
+    @content;
+  }
+}
+
+@mixin until($device) {
+  @media screen and (max-width: $device - 1px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: $tablet - 1px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: $tablet), print {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media screen and (min-width: $tablet) and (max-width: $desktop - 1px) {
+    @content;
+  }
+}
+
+@mixin touch {
+  @media screen and (max-width: $desktop - 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin desktop-only {
+  @if $widescreen-enabled {
+    @media screen and (min-width: $desktop) and (max-width: $widescreen - 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin until-widescreen {
+  @if $widescreen-enabled {
+    @media screen and (max-width: $widescreen - 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin widescreen {
+  @if $widescreen-enabled {
+    @media screen and (min-width: $widescreen) {
+      @content;
+    }
+  }
+}
+
+@mixin widescreen-only {
+  @if $widescreen-enabled and $fullhd-enabled {
+    @media screen and (min-width: $widescreen) and (max-width: $fullhd - 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin until-fullhd {
+  @if $fullhd-enabled {
+    @media screen and (max-width: $fullhd - 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin fullhd {
+  @if $fullhd-enabled {
+    @media screen and (min-width: $fullhd) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+.btn {
+  // btn에 inline-block 설정 해주지 않으면 margin, padding 설정시 위나 아래 줄과 겹쳐서 원치 않는 결과 발생.
+  display: inline-block;
+  text-decoration: none;
+  color: var(--clr-text, #fff);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.125rem;
+  padding: 0.5em 1.25em;
+  background: var(--clr-accent, blue);
+  border-radius: 0.25em;
+  //트랜지션 관련 시간 변수, acceleration 함수는 scss 변수로 설정하여 맨 위에 올려두면
+  //나중에 교체하기 편함.
+  transition: transform 250ms ease-in-out, opacity 250ms linear;
+}
+
+//very subtle 하게 하면 보기 좋음.
+.btn:hover,
+.btn:focus {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
