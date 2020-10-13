@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <Home />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Home from '@/templates/Home';
-
 export default {
   name: 'App',
 
-  components: {
-    Home,
+  methods: {
+    //위로가기 기능.
+    scrollTo(hash) {
+      location.href = hash;
+    },
+  },
+
+  mounted() {
+    //해쉬로 가기?
+    if (this.$route.hash) {
+      this.$nextTick(() => this.scrollTo(this.$route.hash));
+    }
   },
 };
 </script>

@@ -18,11 +18,11 @@
 
       <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
         <div class="navbar-end">
-          <router-link to="/" exact class="navbar-item">
+          <router-link to="/login" exact class="navbar-item">
             회원가입
           </router-link>
 
-          <router-link to="/" class="navbar-item">
+          <router-link to="/signup" class="navbar-item">
             로그인
           </router-link>
         </div>

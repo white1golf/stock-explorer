@@ -1,16 +1,15 @@
 <template>
   <div class="home">
-    <TheNavbar />
-
-    <section class="container">
+    <TheNavbar2 />
+    <div class="container">
       <Scrollindicator />
       <Contentcontainer />
-    </section>
+    </div>
   </div>
 </template>
 
 <script>
-import TheNavbar from '@/components/TheNavbar';
+import TheNavbar2 from '@/components/TheNavbar2';
 import Contentcontainer from '@/components/Contentcontainer';
 import Scrollindicator from '@/components/Scrollindicator';
 
@@ -27,15 +26,9 @@ export default {
     },
   },
   components: {
-    TheNavbar,
+    TheNavbar2,
     Contentcontainer,
     Scrollindicator,
   },
-
-  mounted() {},
 };
 </script>
-
-<style lang="scss">
-@import '@/assets/scss/main.scss';
-</style>
