@@ -56,7 +56,7 @@
 </template>
 
 <script>
-const API_URL = 'http://localhost:3000/auth/login';
+const API_URL = 'https://imadoer.herokuapp.com/signup';
 
 export default {
   name: 'Signupcard',
@@ -92,6 +92,7 @@ export default {
         // TODO redirect
         console.log(json);
         console.log('redirect');
+        this.$router.push('/');
       } else {
         // TODO show error
         console.log('error occured');
