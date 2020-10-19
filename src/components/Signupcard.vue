@@ -56,7 +56,7 @@
 </template>
 
 <script>
-const API_URL = 'https://imadoer.herokuapp.com/signup';
+const API_URL = 'https://imadoer.herokuapp.com/auth/signup';
 
 export default {
   name: 'Signupcard',
