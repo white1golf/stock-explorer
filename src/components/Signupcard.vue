@@ -56,6 +56,7 @@
 </template>
 
 <script>
+const LOCAL_URL = '127.0.0.1:3000/auth/signup';
 const API_URL = 'https://imadoer.herokuapp.com/auth/signup';
 
 export default {
@@ -76,7 +77,7 @@ export default {
   computed: {},
   methods: {
     async signup() {
-      const response = await fetch(API_URL, {
+      const response = await fetch(LOCAL_URL, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
