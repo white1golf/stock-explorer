@@ -20,7 +20,11 @@ export default {
       refreshTokenExpiry: '',
     };
   },
-
+  computed: {
+    isTokenEmpty() {
+      return Object.keys(this.inMemoryToken).length == 0 ? true : false;
+    },
+  },
   methods: {
     async login({ jwt_token, jwt_token_expiry }, noRedirect) {
       this.inMemoryToken = {
@@ -43,7 +47,7 @@ export default {
     },
 
     subMinutes(dt, minutes) {
-      return new Date(dt.getTimes() - minutes * 60 * 1000);
+      return new Date(dt.getTime() - minutes * 60 * 1000);
     },
     //위로가기 기능.
     scrollTo(hash) {
@@ -51,7 +55,8 @@ export default {
     },
 
     async auth() {
-      if (Object.keys(this.inMemoryToken).length == 0) {
+      // token empty => 유저가 로그인 하지 않았다.
+      if (this.isTokenEmpty) {
         const url = 'api/refresh-token';
         try {
           const response = await fetch(url, {
@@ -60,6 +65,7 @@ export default {
             headers: {
               'Content-Type': 'application/json',
               'Cache-Control': 'no-cache',
+              //쿠키 자동으로 서버 전송.
             },
             body: JSON.stringify({}),
           });
@@ -72,19 +78,27 @@ export default {
               refresh_token_expiry,
               user_id,
             } = await response.json();
+            //inMemoryToken 저장.(noRedirect == true)
             await this.login({ jwt_token, jwt_token_expiry }, true);
+            /**
+             *  첫 로그인 시(refresh token cookie 존재 x )
+             *  또는 기타 에러 발생 시.
+             */
           } else {
             let error = new Error(response.statusText);
             error.response = response;
             throw error;
           }
+          //위의 throw 된 error를 처리.
         } catch (error) {
+          console.log('엘마쵸~');
           this.$router.push('/login');
         }
       }
 
+      //inMemoryToken 다시 체크.
       const jwt_token = this.inMemoryToken;
-      if (!jwt_token) {
+      if (this.isTokenEmpty) {
         this.$router.push('/login');
       }
       return jwt_token;
@@ -99,10 +113,18 @@ export default {
   },
 
   async created() {
+    // TODO: static getInitialProps 내 코드였는데...
+    //이 것을 created로 옮기는 게 맞는가?
     const token = await this.auth();
-    if (!this.inMemoryToken) {
+    if (this.isTokenEmpty) {
       this.inMemoryToken = token;
     }
+
+    /**
+     * syncLogout의 경우 window에 eventLisener에 의해 등록되기 때문에
+     * 실행 시 this가 변경되는 것을 방지하기 위해 this bind를 수행함.
+     */
+    this.syncLogout = this.syncLogout.bind(this);
   },
 
   async mounted() {
@@ -135,7 +157,7 @@ export default {
   beforeUnmout() {
     clearInterval(interval);
     window.removeEventListener('storage', this.syncLogout);
-    window.localStorage.remoteItem('logout');
+    window.localStorage.removeItem('logout');
   },
 };
 </script>
