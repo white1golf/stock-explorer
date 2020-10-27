@@ -12,7 +12,7 @@ export default {
 
   data() {
     return {
-      inMemoryToken: {},
+      inMemoryToken: {}, // 메모리 저장 accessToken. 쿠키의 refresh token 을 기반으로 서버에서 제공.
       jwtToken: '',
       jwtTokenExpiry: '',
       userId: '',
@@ -21,7 +21,7 @@ export default {
     };
   },
   computed: {
-    isTokenEmpty() {
+    isAccessTokenEmpty() {
       return Object.keys(this.inMemoryToken).length == 0 ? true : false;
     },
   },
@@ -56,7 +56,7 @@ export default {
 
     async auth() {
       // token empty => 유저가 로그인 하지 않았다.
-      if (this.isTokenEmpty) {
+      if (this.isAccessTokenEmpty) {
         const url = 'api/refresh-token';
         try {
           const response = await fetch(url, {
@@ -74,15 +74,14 @@ export default {
               jwt_token,
               refresh_token,
               jwt_token_expiry,
-              expiry,
               refresh_token_expiry,
               user_id,
             } = await response.json();
             //inMemoryToken 저장.(noRedirect == true)
             await this.login({ jwt_token, jwt_token_expiry }, true);
             /**
-             *  첫 로그인 시(refresh token cookie 존재 x )
-             *  또는 기타 에러 발생 시.
+             *  첫 로그인 시(refresh token cookie 존재 하지 않아 access token 발급이 안됨. )
+             *  또는 기타 상황(인터넷 접속)등에 의한 실패 시.
              */
           } else {
             let error = new Error(response.statusText);
@@ -90,18 +89,14 @@ export default {
             throw error;
           }
           //위의 throw 된 error를 처리.
+          //예) 쿠키가 없다.
         } catch (error) {
-          console.log('엘마쵸~');
-          this.$router.push('/login');
+          console.log(`auth fn: refresh 토큰 기반 로그인 실패`);
+          console.log(`원인 : ${error}`);
         }
       }
 
-      //inMemoryToken 다시 체크.
-      const jwt_token = this.inMemoryToken;
-      if (this.isTokenEmpty) {
-        this.$router.push('/login');
-      }
-      return jwt_token;
+      return this.inMemoryToken;
     },
 
     syncLogout(event) {
@@ -113,12 +108,15 @@ export default {
   },
 
   async created() {
-    // TODO: static getInitialProps 내 코드였는데...
-    //이 것을 created로 옮기는 게 맞는가?
-    const token = await this.auth();
-    if (this.isTokenEmpty) {
-      this.inMemoryToken = token;
-    }
+    /**
+     * 자동 로그인 유지.
+     * 1. refresh token cookie가 없는 경우. => 로그인 시도가 없는 경우 또는, 쿠키가 삭제된 경우.
+     *  => auth 메소드에서 에러를 발생시키고 console에 에러를 출력함. token은 여전히 {} 상태.
+     * 2. refresh token cookie가 있는 경우. => created 단계에서부터 자동 로그인.
+     *  => auth내에서 호출하는 this.login() 메소드에 의해 this.inMemory에 jwt_token, jwt_token_expiry 값이 들어감.
+     */
+
+    await this.auth();
 
     /**
      * syncLogout의 경우 window에 eventLisener에 의해 등록되기 때문에
@@ -130,7 +128,7 @@ export default {
   async mounted() {
     interval = setInterval(async () => {
       //1. 이미 토큰을 가지고 있을 때.
-      if (this.inMemoryToken) {
+      if (!this.isAccessTokenEmpty) {
         if (
           this.subMinutes(new Date(this.inMemoryToken.expiry), 1) <=
           new Date(this.inMemoryToken.expiry)
@@ -139,10 +137,7 @@ export default {
           const token = await this.auth();
           this.inMemoryToken = token;
         }
-      } else {
-        const token = await this.auth();
-        this.inMemoryToken = token;
-      }
+      } //2. else 로 토큰값이 없을 때 this.$router.push()로 페이지 이동 가능.
     }, 60000);
 
     window.addEventListener('storage', this.syncLogout);
