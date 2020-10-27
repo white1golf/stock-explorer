@@ -5,6 +5,10 @@ import authAPI from '../api/authAPI';
 
 Vue.use(Vuex);
 
+function subMinutes(dt, minutes) {
+  return new Date(dt.getTime() - minutes * 60 * 1000);
+}
+
 export default new Vuex.Store({
   state: {
     isAuthenticated: false,
@@ -76,7 +80,7 @@ export default new Vuex.Store({
       const response = await authAPI.logout();
       store.commit(Constant.LOGOUT, response);
     },
-    [Constant.VERIFY_AUTH]: async store => {
+    [Constant.FETCH_AUTH]: async store => {
       if (!store.state.inMemoryToken) {
         try {
           const response = await authAPI.auth();
@@ -90,6 +94,16 @@ export default new Vuex.Store({
           // 쿠키 없을 때. 또는 어떤 이유든 간에...
         } catch (error) {
           store.commit(Constant.UPDATE_RES, error);
+        }
+      }
+    },
+    [Constant.SILENT_REFRESH]: async store => {
+      if (store.state.inMemoryToken) {
+        if (
+          subMinutes(new Date(store.state.inMemoryToken.expiry), 1) <=
+          new Date(store.state.inMemoryToken.expiry)
+        ) {
+          await store.dispatch(Constant.FETCH_AUTH);
         }
       }
     },

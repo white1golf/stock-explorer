@@ -17,13 +17,17 @@
       </div>
 
       <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
-        <div class="navbar-end">
+        <div v-if="!isAuthenticated" class="navbar-end">
           <router-link to="/signup" exact class="navbar-item">
             회원가입
           </router-link>
-
           <router-link to="/login" class="navbar-item">
             로그인
+          </router-link>
+        </div>
+        <div v-else class="navbar-end">
+          <router-link to="/logout" class="navbar-item">
+            로그아웃
           </router-link>
         </div>
       </div>
@@ -41,6 +45,7 @@ export default {
   data() {
     return {
       isMenuActive: false,
+      isAuthenticated: false,
     };
   },
   methods: {
