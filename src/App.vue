@@ -50,10 +50,9 @@ export default {
   },
 
   async mounted() {
-    interval = setInterval(
-      this.$store.dispatch(Constant.SILENT_REFRESH),
-      60000
-    );
+    interval = window.setInterval(() => {
+      this.$store.dispatch(Constant.SILENT_REFRESH);
+    }, 60000);
     window.addEventListener('storage', this.syncLogout);
 
     //해쉬로 가기?
@@ -64,7 +63,7 @@ export default {
   },
 
   beforeUnmout() {
-    clearInterval(interval);
+    window.clearInterval(interval);
     window.removeEventListener('storage', this.syncLogout);
     window.localStorage.removeItem('logout');
   },

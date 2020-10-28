@@ -45,8 +45,12 @@ export default {
   data() {
     return {
       isMenuActive: false,
-      isAuthenticated: false,
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.isAuthenticated;
+    },
   },
   methods: {
     closeMenu() {

@@ -39,7 +39,7 @@ export default new Vuex.Store({
         jwt_token_expiry,
         refresh_token_expiry,
         user_id,
-      } = payload.json();
+      } = payload; //payload 는 res.json()의 결과값.
       state.inMemoryToken = {
         token: jwt_token,
         expiry: jwt_token_expiry,
@@ -85,7 +85,8 @@ export default new Vuex.Store({
         try {
           const response = await authAPI.auth();
           if (response.status === 200) {
-            store.commit(Constant.FETCH_AUTH, response);
+            //fetch api 의 response에서 json() 메소드는 promise 반환 타입.
+            store.commit(Constant.FETCH_AUTH, await response.json());
           } else {
             let error = new Error(response.statusText);
             error.response = response;

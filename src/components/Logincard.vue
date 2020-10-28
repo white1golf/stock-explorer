@@ -62,7 +62,7 @@
 </template>
 
 <script>
-const API_URL = 'http://localhost:3000/auth/login';
+import Constant from '../store/constant';
 
 export default {
   name: 'LogInCard',
@@ -79,28 +79,27 @@ export default {
       isPasswordFocused: false,
     };
   },
-  computed: {},
+  computed: {
+    inMemoryToken() {
+      return this.$store.state.inMemoryToken;
+    },
+    res() {
+      return this.$store.state.res;
+    },
+  },
   methods: {
     async login() {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: this.email.value,
-          password: this.password.value,
-        }),
+      await this.$store.dispatch(Constant.SUBMIT_LOGIN, {
+        email: this.email,
+        password: this.password,
       });
-
-      const json = await response.json();
-      if (response.ok) {
-        // TODO redirect
-        console.log(json);
-        console.log('redirect');
+      if (this.inMemoryToken !== null) {
+        this.$router.push('/'); // 로그인 성공.
       } else {
-        // TODO show error
-        console.log('error occured');
+        //로그인 실패 시
+        // 임시로 pwdHelpMsg에 넣어보자.
+        this.pwdHelpMsg = this.res;
+        this.visiblePwdHelp = true; //이야기를 넣어요.
       }
     },
   },

@@ -43,7 +43,7 @@
             />
           </div>
           <p class="c__field__find">
-            여기 비밀번호 validation 올 예정..
+            {{ errMsg }}
           </p>
           <p class="c__field__help" v-show="visiblePwdHelp">{{ pwdHelpMsg }}</p>
         </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-const LOCAL_URL = '127.0.0.1:3000/auth/signup';
+const LOCAL_URL = 'http://localhost:3000/auth/signup';
 const API_URL = 'https://imadoer.herokuapp.com/auth/signup';
 
 export default {
@@ -72,6 +72,7 @@ export default {
       pwdHelpMsg: '',
       isEmailFocused: false,
       isPasswordFocused: false,
+      errMsg: '',
     };
   },
   computed: {},
@@ -83,20 +84,23 @@ export default {
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          email: this.email.value,
-          password: this.password.value,
+          email: this.email,
+          password: this.password,
         }),
       });
 
-      const json = await response.json();
       if (response.ok) {
+        //response.ok 는 반환값 코드 중 200~299번에 해당되는 경우 true를 반환하는 값.
         // TODO redirect
-        console.log(json);
         console.log('redirect');
         this.$router.push('/');
+        // statusCode 200번대가 아닐 때.
       } else {
-        // TODO show error
-        console.log('error occured');
+        const json = await response.json();
+        // error json은 {message, stack}의 속성을 가짐.
+        this.errMsg = json.message;
+        //this.errMsgStack = json.stack;
+        console.log('signup api error occured');
       }
     },
   },

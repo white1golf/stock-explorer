@@ -1,14 +1,16 @@
+const LOCAL_HOST = 'http://localhost:3000';
+
 export default {
   logout: function() {
-    return fetch('/logout', {
+    return fetch(LOCAL_HOST + '/logout', {
       method: 'POST',
-      credentials: 'include',
+      credentials: 'include', //반드시 필요함.
     });
   },
   auth: function() {
-    return fetch('/api/refresh-token', {
+    return fetch(LOCAL_HOST + '/auth/refresh-token', {
       method: 'POST',
-      credentials: 'include',
+      credentials: 'include', //반드시 필요함
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
@@ -18,13 +20,13 @@ export default {
     });
   },
   login: function(user) {
-    return fetch('/login', {
+    return fetch(LOCAL_HOST + '/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: user.id,
+        email: user.email,
         password: user.password,
       }),
     });
