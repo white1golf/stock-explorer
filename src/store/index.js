@@ -75,27 +75,46 @@ export default new Vuex.Store({
         }
       }
     },
+
+    //TODO: 일단 signupcard.vue에서 signup 함수를 직접 구현함.
+    //이를 action으로 빼야할까? 생각해 볼 것.
     [Constant.SUBMIT_SIGNUP]: (store, payload) => {},
     [Constant.LOGOUT]: async store => {
       const response = await authAPI.logout();
       store.commit(Constant.LOGOUT, response);
     },
+    //Action - FETCH_AUTH 는 access_token 재발급 프로세스.
     [Constant.FETCH_AUTH]: async store => {
-      if (!store.state.inMemoryToken) {
-        try {
-          const response = await authAPI.auth();
-          if (response.status === 200) {
-            //fetch api 의 response에서 json() 메소드는 promise 반환 타입.
-            store.commit(Constant.FETCH_AUTH, await response.json());
-          } else {
-            let error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-          }
-          // 쿠키 없을 때. 또는 어떤 이유든 간에...
-        } catch (error) {
-          store.commit(Constant.UPDATE_RES, error);
+      /**
+       * 1. 앱이 refresh 버튼 등으로 재시작 된 경우.
+       *    store.state.inMemoryToken === null,
+       *    호출 경로 : created hook 에서 직접 dispatch.
+       *
+       * 2. 주기적 수행되는 silent refresh.
+       *    store.state.inMemoryToken !== null,
+       *    호출 경로 : mounted hook에 의해 setInterval로 등록된 silent refresh action
+       *    단 silent refresh 에서 inMemoryToken !== null 과 재인증 주기 체크 통과.
+       *
+       * 위의 두 경우 모두 쿠키내 refresh-token 값이 존재.
+       *
+       */
+
+      try {
+        const response = await authAPI.auth();
+        //response는 cookie 내 refresh token 의 존재 유무에 따라 값이 달라짐.
+        if (response.status === 200) {
+          //fetch api 의 response에서 json() 메소드는 promise 반환 타입.
+          store.commit(Constant.FETCH_AUTH, await response.json());
+          //만일 cookie 내 refresh token 이 존재치 않거나 존재하지만 그 값이
+          //사용자에게 할당된 refresh token 과 값이 다른 경우.
+        } else {
+          let error = new Error(response.statusText);
+          error.response = response;
+          throw error;
         }
+        // 네트워크 에러 발생...
+      } catch (error) {
+        store.commit(Constant.UPDATE_RES, error);
       }
     },
     [Constant.SILENT_REFRESH]: async store => {
