@@ -22,6 +22,7 @@ export default {
   login: function(user) {
     return fetch(LOCAL_HOST + '/auth/login', {
       method: 'POST',
+      credentials: 'include', //cookie 설정을 위해 반드시 필요.
       headers: {
         'Content-Type': 'application/json',
       },
