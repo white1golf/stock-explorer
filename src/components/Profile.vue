@@ -1,11 +1,7 @@
 <template>
   <section class="profile">
     <div @click="isMenuActive = !isMenuActive">
-      <Avatar
-        class="avatar"
-        :size="40"
-        username="changsan2438@gmail.com"
-      ></Avatar>
+      <Avatar class="avatar" :size="40" :username="userName"></Avatar>
     </div>
     <div class="dropdown-menu" :class="{ 'is-active': isMenuActive }">
       <router-link to="/setting" class="menu-item">
@@ -26,6 +22,7 @@ export default {
   components: {
     Avatar,
   },
+
   data() {
     return {
       isMenuActive: false,
@@ -36,9 +33,10 @@ export default {
       return this.$store.state.isAuthenticated;
     },
     userName() {
-      return this.$store.state.user.user_id;
+      return this.$store.state.user.id;
     },
   },
+
   methods: {
     closemenu() {
       this.isMenuActive = false;
@@ -51,6 +49,7 @@ export default {
       } else this.$router.push('/');
     },
   },
+
   mounted() {
     this.$eventHub.$on('navigate', this.closeMenu);
   },

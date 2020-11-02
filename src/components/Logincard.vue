@@ -63,7 +63,7 @@
 
 <script>
 import Constant from '../store/constant';
-
+import { isEmpty } from '@/utils/utils.js';
 export default {
   name: 'LogInCard',
   data() {
@@ -94,7 +94,7 @@ export default {
         password: this.password,
       });
       window.localStorage.setItem('login', Date.now());
-      if (this.inMemoryToken !== null) {
+      if (!isEmpty(this.inMemoryToken)) {
         this.$router.push('/'); // 로그인 성공.
       } else {
         //로그인 실패 시

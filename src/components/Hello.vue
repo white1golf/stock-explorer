@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div v-if="logedIn" class="nonuser">
+    <div v-if="!isAuthenticated" class="nonuser">
       <h1 class="title">누구세요?</h1>
       <p>🤔🤔🤔🤔</p>
     </div>
@@ -13,7 +13,14 @@
 
 <script>
 export default {
-  data,
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.isAuthenticated;
+    },
+    userName() {
+      return this.$store.state.user.id;
+    },
+  },
 };
 </script>
 

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Constant from './constant';
 import authAPI from '../api/authAPI';
+import { isEmpty } from '@/utils/utils.js';
 
 Vue.use(Vuex);
 
@@ -12,24 +13,24 @@ function subMinutes(dt, minutes) {
 export default new Vuex.Store({
   state: {
     isAuthenticated: false,
-    user: null,
+    user: {},
     jwtToken: '',
     jwtTokenExpiry: 0,
-    inMemoryToken: null,
+    inMemoryToken: {},
     refreshToken: '',
     refreshTokenExpiry: 0,
-    res: null,
+    res: {},
   },
 
   mutations: {
     [Constant.LOGOUT]: (state, payload) => {
-      state.inMemoryToken = null;
+      state.inMemoryToken = {};
       state.res = payload;
-      state.jwtToken = null;
-      state.jwtTokenExpiry = null;
-      state.refreshToken = null;
-      state.refreshTokenExpiry = null;
-      state.user = null;
+      state.jwtToken = '';
+      state.jwtTokenExpiry = 0;
+      state.refreshToken = '';
+      state.refreshTokenExpiry = 0;
+      state.user = {};
       state.isAuthenticated = false;
     },
     [Constant.UPDATE_RES]: (state, payload) => {
@@ -132,7 +133,7 @@ export default new Vuex.Store({
     },
     [Constant.SILENT_REFRESH]: async store => {
       //access 토큰이 존재할 때.
-      if (store.state.inMemoryToken) {
+      if (!isEmpty(store.state.inMemoryToken)) {
         if (
           //호출 상황: setInterval에 의해 등록된 콜백.
           //만료시간 1분 이하.

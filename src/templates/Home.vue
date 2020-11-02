@@ -1,18 +1,15 @@
 <template>
   <div class="home">
     <TheNavbar2 />
-    <div class="container">
-      <Scrollindicator />
-      <Contentcontainer />
+    <div class="container-v">
+      <Hello></Hello>
     </div>
   </div>
 </template>
 
 <script>
 import TheNavbar2 from '@/components/TheNavbar2';
-import Contentcontainer from '@/components/Contentcontainer';
-import Scrollindicator from '@/components/Scrollindicator';
-
+import Hello from '@/components/Hello';
 export default {
   name: 'App',
 
@@ -27,8 +24,7 @@ export default {
   },
   components: {
     TheNavbar2,
-    Contentcontainer,
-    Scrollindicator,
+    Hello,
   },
 };
 </script>
