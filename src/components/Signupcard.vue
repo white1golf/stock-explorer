@@ -78,7 +78,7 @@ export default {
   computed: {},
   methods: {
     async signup() {
-      const response = await fetch(LOCAL_URL, {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
