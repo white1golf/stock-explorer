@@ -1,6 +1,6 @@
 const LOCAL_HOST = 'http://localhost:3000';
 const BACKEND_SERVER = 'https://imadoer.herokuapp.com';
-const SERVER = LOCAL_HOST;
+const SERVER = BACKEND_SERVER;
 export default {
   logout: function() {
     return fetch(SERVER + '/auth/logout', {
