@@ -25,6 +25,12 @@ export default new Vuex.Store({
     [Constant.LOGOUT]: (state, payload) => {
       state.inMemoryToken = null;
       state.res = payload;
+      state.jwtToken = null;
+      state.jwtTokenExpiry = null;
+      state.refreshToken = null;
+      state.refreshTokenExpiry = null;
+      state.user = null;
+      state.isAuthenticated = false;
     },
     [Constant.UPDATE_RES]: (state, payload) => {
       //payload 가 error 객체라 이렇게 넣는게 맞는지는 잘 모르겠음...
@@ -80,8 +86,13 @@ export default new Vuex.Store({
     //이를 action으로 빼야할까? 생각해 볼 것.
     [Constant.SUBMIT_SIGNUP]: (store, payload) => {},
     [Constant.LOGOUT]: async store => {
-      const response = await authAPI.logout();
-      store.commit(Constant.LOGOUT, response);
+      try {
+        const response = await authAPI.logout();
+        store.commit(Constant.LOGOUT, response);
+      } catch (err) {
+        //network 에러 발생시.
+        console.log('ERR_CONNECTION_REFUSED -> 네트워크 확인해볼래유?');
+      }
     },
     //Action - FETCH_AUTH 는 access_token 재발급 프로세스.
     [Constant.FETCH_AUTH]: async store => {
@@ -95,7 +106,9 @@ export default new Vuex.Store({
        *    호출 경로 : mounted hook에 의해 setInterval로 등록된 silent refresh action
        *    단 silent refresh 에서 inMemoryToken !== null 과 재인증 주기 체크 통과.
        *
-       * 위의 두 경우 모두 쿠키내 refresh-token 값이 존재.
+       * 3. 다른 탭에 열려있는 동일 앱에서 login 이벤트가 발생한 경우.
+       *
+       * 위의 세 가지 경우 모두 쿠키내 refresh-token 값이 존재.
        *
        */
 
@@ -118,8 +131,11 @@ export default new Vuex.Store({
       }
     },
     [Constant.SILENT_REFRESH]: async store => {
+      //access 토큰이 존재할 때.
       if (store.state.inMemoryToken) {
         if (
+          //호출 상황: setInterval에 의해 등록된 콜백.
+          //만료시간 1분 이하.
           subMinutes(new Date(store.state.inMemoryToken.expiry), 1) <=
           new Date(store.state.inMemoryToken.expiry)
         ) {

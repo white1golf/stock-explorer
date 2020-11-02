@@ -2,7 +2,7 @@ const LOCAL_HOST = 'http://localhost:3000';
 
 export default {
   logout: function() {
-    return fetch(LOCAL_HOST + '/logout', {
+    return fetch(LOCAL_HOST + '/auth/logout', {
       method: 'POST',
       credentials: 'include', //반드시 필요함.
     });

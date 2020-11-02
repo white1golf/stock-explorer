@@ -93,6 +93,7 @@ export default {
         email: this.email,
         password: this.password,
       });
+      window.localStorage.setItem('login', Date.now());
       if (this.inMemoryToken !== null) {
         this.$router.push('/'); // 로그인 성공.
       } else {

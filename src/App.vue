@@ -13,11 +13,12 @@ let interval;
 export default {
   name: 'App',
   methods: {
-    async logout() {
-      await this.$store.dispatch(Constant.LOGOUT);
-      window.localStorage.setItem('logout', Date.now());
-      this.$router.push('/login');
-    },
+    //여기에 정의할 필요가 없을듯...?
+    // async logout() {
+    //   await this.$store.dispatch(Constant.LOGOUT);
+    //   window.localStorage.setItem('logout', Date.now());
+    //   this.$router.push('/login');
+    // },
     //위로가기 기능.
     scrollTo(hash) {
       location.href = hash;
@@ -26,7 +27,17 @@ export default {
     syncLogout(event) {
       if (event.key === 'logout') {
         console.log('logged out from storage!');
-        this.$router.push('/login');
+        this.$store.commit(Constant.LOGOUT, null);
+        if (this.$router.currentRoute.path === '/') {
+          this.$router.go();
+        } else this.$router.push('/');
+      }
+    },
+    //로그인 탭 동기화.
+    syncLogin(event) {
+      if (event.key === 'login') {
+        console.log('logged into storage!');
+        this.$store.dispatch(Constant.FETCH_AUTH);
       }
     },
   },
@@ -46,6 +57,7 @@ export default {
      * syncLogout의 경우 window에 eventLisener에 의해 등록되기 때문에
      * 실행 시 this가 변경되는 것을 방지하기 위해 this bind를 수행함.
      */
+    this.syncLogin = this.syncLogin.bind(this);
     this.syncLogout = this.syncLogout.bind(this);
   },
 
@@ -53,8 +65,8 @@ export default {
     interval = window.setInterval(() => {
       this.$store.dispatch(Constant.SILENT_REFRESH);
     }, 60000);
+    window.addEventListener('storage', this.syncLogin);
     window.addEventListener('storage', this.syncLogout);
-
     //해쉬로 가기?
     if (this.$route.hash) {
       //모든 vue instance 들이 mounted 됨을 보장하기 위해 nextTick 사용.
@@ -66,6 +78,7 @@ export default {
     window.clearInterval(interval);
     window.removeEventListener('storage', this.syncLogout);
     window.localStorage.removeItem('logout');
+    window.localStorage.remoteItem('login');
   },
 };
 </script>

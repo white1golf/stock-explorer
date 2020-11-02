@@ -26,9 +26,7 @@
           </router-link>
         </div>
         <div v-else class="navbar-end">
-          <router-link to="/logout" class="navbar-item">
-            로그아웃
-          </router-link>
+          <Profile></Profile>
         </div>
       </div>
     </div>
@@ -37,10 +35,12 @@
 
 <script>
 import TheSearch from '@/components/TheSearch';
+import Profile from '@/components/Profile';
 
 export default {
   components: {
     TheSearch,
+    Profile,
   },
   data() {
     return {
