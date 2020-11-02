@@ -1,0 +1,41 @@
+@import '../utils/all';
+$grey-lighter: hsl(0, 0%, 86%) !default;
+
+$dropdown-menu-width: 130px;
+$dropdown-menu-bg: white;
+
+.profile {
+  position: relative;
+  .avatar {
+    cursor: pointer;
+  }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    width: $dropdown-menu-width;
+    border: 1px solid hsl(0, 0%, 86%);
+    border-radius: 1rem;
+    background: $dropdown-menu-bg;
+    padding: 2rem;
+    top: 20;
+    right: 0;
+    &.is-active {
+      display: flex;
+    }
+    &::after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: -14px;
+      right: 11px;
+      border: 7px solid transparent;
+      border-bottom: 7px solid $dropdown-menu-bg;
+    }
+  }
+  .menu-item {
+    &.logout {
+      cursor: pointer;
+    }
+  }
+}
