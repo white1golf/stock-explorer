@@ -1,5 +1,6 @@
 <template>
   <section class="profile">
+    <span class="navbar-item"><i class="fas fa-plus"></i></span>
     <div @click="isMenuActive = !isMenuActive">
       <Avatar class="avatar" :size="40" :username="userName"></Avatar>
     </div>

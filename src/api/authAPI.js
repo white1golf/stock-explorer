@@ -1,15 +1,13 @@
-const LOCAL_HOST = 'http://localhost:3000';
-const BACKEND_SERVER = 'https://imadoer.herokuapp.com';
-const SERVER = BACKEND_SERVER;
+const URL = process.env.URL ? process.env.URL : process.env.VUE_APP_URL;
 export default {
   logout: function() {
-    return fetch(SERVER + '/auth/logout', {
+    return fetch(URL + '/auth/logout', {
       method: 'POST',
       credentials: 'include', //반드시 필요함.
     });
   },
   auth: function() {
-    return fetch(SERVER + '/auth/refresh-token', {
+    return fetch(URL + '/auth/refresh-token', {
       method: 'POST',
       credentials: 'include', //반드시 필요함
       headers: {
@@ -21,7 +19,7 @@ export default {
     });
   },
   login: function(user) {
-    return fetch(SERVER + '/auth/login', {
+    return fetch(URL + '/auth/login', {
       method: 'POST',
       credentials: 'include', //cookie 설정을 위해 반드시 필요.
       headers: {

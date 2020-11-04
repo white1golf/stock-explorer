@@ -56,8 +56,7 @@
 </template>
 
 <script>
-const LOCAL_URL = 'http://localhost:3000/auth/signup';
-const API_URL = 'https://imadoer.herokuapp.com/auth/signup';
+const URL = process.env.URL ? process.env.URL : process.env.VUE_APP_URL;
 
 export default {
   name: 'Signupcard',
@@ -78,7 +77,7 @@ export default {
   computed: {},
   methods: {
     async signup() {
-      const response = await fetch(API_URL, {
+      const response = await fetch(URL + '/auth/signup', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

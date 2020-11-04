@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../templates/Home.vue';
+import Dev from '../templates/Dev.vue';
 import Loginsignup from '../templates/Loginsignup.vue';
 
 import { afterEachGlobal } from './guards';
@@ -28,6 +29,11 @@ const router = new VueRouter({
       path: '/',
       name: '/',
       component: Home,
+    },
+    {
+      path: '/dev',
+      name: 'dev',
+      component: Dev,
     },
     {
       path: '/',

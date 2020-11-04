@@ -1,0 +1,31 @@
+{
+  "new": [
+    {
+      "id": 0,
+      "title": "새로운 모험1",
+      "to": "/새로운모험1"
+    },
+    {
+      "id": 1,
+      "title": "새로운 모험2",
+      "to": "/새로운모험2"
+    },
+    {
+      "id": 2,
+      "title": "새로운 모험3",
+      "to": "/새로운 모험3"
+    }
+  ],
+  "profile": [
+    {
+      "id": 0,
+      "title": "setting",
+      "to": "/settings"
+    },
+    {
+      "id": 1,
+      "title": "새로운 정보2",
+      "isRouterLink": false
+    }
+  ]
+}
