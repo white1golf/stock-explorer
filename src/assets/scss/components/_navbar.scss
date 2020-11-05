@@ -7,6 +7,8 @@ $navbar-item-hover-color: $primary !default;
 $navbar-background-color: white;
 $navbar-active-menu-color: $navbar-background-color;
 $navbar-burger-color: $navbar-item-color !default;
+$navbar-dropdown-menu-width: 130px;
+$navbar-dropdown-menu-bg: white;
 
 $navbar-breakpoint: $tablet !default;
 
@@ -41,19 +43,19 @@ $navbar-breakpoint: $tablet !default;
       }
     }
   }
-  &-menu {
-    display: none;
-    background-color: $navbar-active-menu-color;
-    width: 100%;
-    @include until($navbar-breakpoint) {
-      &.is-active {
-        display: flex;
-      }
-    }
-    @include from($navbar-breakpoint) {
-      display: flex;
-    }
-  }
+  // &-menu {
+  //   display: none;
+  //   background-color: $navbar-active-menu-color;
+  //   width: 100%;
+  //   @include until($navbar-breakpoint) {
+  //     &.is-active {
+  //       display: flex;
+  //     }
+  //   }
+  //   @include from($navbar-breakpoint) {
+  //     display: flex;
+  //   }
+  // }
   &-item {
     &:hover,
     &:focus {
@@ -89,6 +91,63 @@ $navbar-breakpoint: $tablet !default;
     margin-left: auto;
     @include from($navbar-breakpoint) {
       display: none;
+    }
+  }
+
+  .LoggedInNav {
+    display: flex;
+    flex-direction: column;
+    @include from($navbar-breakpoint) {
+      margin-left: auto;
+      flex-direction: row;
+      & > * + * {
+        margin-left: 1rem;
+      }
+    }
+    .has-dropdown {
+      position: relative;
+      .clickable-wrap {
+        cursor: pointer;
+        &.new {
+          display: flex;
+          flex-shrink: 0;
+          flex-grow: 0;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          border: 1px solid grey;
+          border-radius: 50%;
+          &:hover {
+          }
+        }
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        flex-direction: column;
+        width: $navbar-dropdown-menu-width;
+        height: 150px;
+        border: 1px solid hsl(0, 0%, 86%);
+        border-radius: 1rem;
+        background: $navbar-dropdown-menu-bg;
+        padding: 2rem;
+        top: 40px;
+        right: 0px;
+        &.is-active {
+          display: flex;
+        }
+        &::after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          top: -14px;
+          right: 11px;
+          border: 7px solid transparent;
+          border-bottom: 7px solid $navbar-dropdown-menu-bg;
+        }
+      }
     }
   }
 }

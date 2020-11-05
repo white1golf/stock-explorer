@@ -1,5 +1,5 @@
 <template>
-  <div class="container-v">
+  <div class="container-v navbar">
     <LoggedInNav> </LoggedInNav>
   </div>
 </template>
