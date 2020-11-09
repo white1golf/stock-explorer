@@ -1,25 +1,25 @@
 <template>
   <section class="LoggedInNav">
-    <Navitemdropdown :items="menu.new" wrapClass="new">
+    <NavbarDropdown :items="menu.new" wrapClass="new">
       <i name="new" class="fas fa-plus"></i>
-    </Navitemdropdown>
+    </NavbarDropdown>
 
-    <Navitemdropdown :items="menu.profile" wrapClass="profile">
+    <NavbarDropdown :items="menu.profile" wrapClass="profile">
       <Avatar name="profile" class="avatar" :size="40" username="장산"></Avatar>
-    </Navitemdropdown>
+    </NavbarDropdown>
   </section>
 </template>
 
 <script>
 import Avatar from 'vue-avatar';
-import Navitemdropdown from '@/components/Navitemdropdown';
+import NavbarDropdown from '@/components/NavbarDropdown';
 
 import data from '@/data/dropdown';
 
 export default {
   components: {
     Avatar,
-    Navitemdropdown,
+    NavbarDropdown,
   },
 
   data() {

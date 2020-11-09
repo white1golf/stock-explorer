@@ -1,33 +1,31 @@
 <template>
-  <nav class="navbar">
-    <div class="container">
-      <div class="navbar-brand">
-        <span
-          class="navbar-burger"
-          :class="{ 'is-active': isMenuActive }"
-          @click="isMenuActive = !isMenuActive"
-        >
-          <span />
-          <span />
-          <span />
-        </span>
-      </div>
-      <div class="navbar-middle">
+  <nav class="navbar" v-click-outside="closeMenu">
+    <div class="navbar-brand">
+      <span
+        class="navbar-burger"
+        :class="{ 'is-active': isOpened }"
+        @click="toggleActive"
+      >
+        <span />
+        <span />
+        <span />
+      </span>
+    </div>
+
+    <div class="navbar-menu" :class="{ 'is-active': internalIsActive }">
+      <div class="navbar-start">
         <TheSearch />
       </div>
-
-      <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
-        <div v-if="!isAuthenticated" class="navbar-end">
-          <router-link to="/signup" exact class="navbar-item">
-            회원가입
-          </router-link>
-          <router-link to="/login" class="navbar-item">
-            로그인
-          </router-link>
-        </div>
-        <div v-else class="navbar-end">
-          <Profile></Profile>
-        </div>
+      <div v-if="!isAuthenticated" class="navbar-end">
+        <router-link to="/signup" exact class="navbar-item">
+          회원가입
+        </router-link>
+        <router-link to="/login" class="navbar-item">
+          로그인
+        </router-link>
+      </div>
+      <div v-else class="navbar-end">
+        <Profile></Profile>
       </div>
     </div>
   </nav>
@@ -36,25 +34,54 @@
 <script>
 import TheSearch from '@/components/TheSearch';
 import Profile from '@/components/Profile';
+import clickOutside from '../directives/clickOutside';
 
 export default {
   components: {
     TheSearch,
     Profile,
   },
+  // 사용자 정의 지시어.
+  directives: {
+    clickOutside,
+  },
   data() {
     return {
-      isMenuActive: false,
+      internalIsActive: this.active,
     };
   },
+  props: {
+    // To Control the behaviour of the mobile menu programmatically. use the .sync modifier to make it two-way binding.
+    active: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  watch: {
+    active: {
+      handler(active) {
+        this.internalIsActive = active;
+      },
+      immediate: true, //immedisate true 값으로 default 값 false 로 지정된 값을 기반으로 호출 발생.
+    },
+  },
   computed: {
+    isOpened() {
+      return this.internalIsActive;
+    },
+
     isAuthenticated() {
       return this.$store.state.isAuthenticated;
     },
   },
   methods: {
+    // burger 에서 사용.
+    toggleActive() {
+      this.internalIsActive = !this.internalIsActive;
+    },
+    // click-outside에서 사용.
     closeMenu() {
-      this.isMenuActive = false;
+      if (this.internalIsActive) this.internalIsActive = false;
     },
   },
   mounted() {

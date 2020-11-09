@@ -106,7 +106,7 @@ $navbar-breakpoint: $tablet !default;
     }
     .has-dropdown {
       position: relative;
-      .clickable-wrap {
+      .navbar-link {
         cursor: pointer;
         &.new {
           display: flex;
@@ -123,8 +123,8 @@ $navbar-breakpoint: $tablet !default;
         }
       }
 
-      .dropdown-menu {
-        display: none;
+      .navbar-dropdown {
+        display: flex;
         position: absolute;
         flex-direction: column;
         width: $navbar-dropdown-menu-width;
@@ -135,9 +135,7 @@ $navbar-breakpoint: $tablet !default;
         padding: 2rem;
         top: 40px;
         right: 0px;
-        &.is-active {
-          display: flex;
-        }
+
         &::after {
           content: '';
           display: inline-block;
