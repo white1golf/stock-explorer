@@ -8,7 +8,7 @@ $navbar-item-hover-bg-color: rgba(black, 0.05) !default;
 $navbar-background-color: white;
 $navbar-active-menu-color: $navbar-background-color;
 $navbar-burger-color: $navbar-item-color !default;
-$navbar-dropdown-menu-width: 500px;
+$navbar-dropdown-menu-width: 178px;
 $navbar-dropdown-menu-bg: white;
 
 $navbar-breakpoint: $tablet !default;
@@ -134,26 +134,34 @@ $navbar-breakpoint: $tablet !default;
           height: 40px;
           border: 1px solid $grey-light;
           border-radius: 50%;
-          &:hover {
-          }
+          transition: rotate 1 ease-in-out;
+        }
+        &.new.is-active {
+          transform: rotate(45deg);
         }
       }
 
       .navbar-dropdown {
         @include shadow;
+        padding: 0.6rem 0rem;
         display: flex;
         position: absolute;
         flex-direction: column;
+        justify-content: stretch;
+        font-size: 0.8rem;
+        line-height: 1.5rem;
         width: $navbar-dropdown-menu-width;
-        height: 500px;
         border: 1px solid hsl(0, 0%, 86%);
         border-radius: 1rem;
         background: $navbar-dropdown-menu-bg;
-        padding: 2rem;
         top: 40px;
         right: 0px;
-        & > .navbar-item:hover {
-          background-color: $navbar-item-hover-bg-color;
+        & > .navbar-item {
+          padding: 0.3rem 1rem;
+          padding-left: 2rem;
+          &:hover {
+            background-color: $navbar-item-hover-bg-color;
+          }
         }
         &::after {
           content: '';

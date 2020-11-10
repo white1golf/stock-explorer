@@ -22,7 +22,6 @@
 const clickableWhiteList = ['div', 'span', 'input'];
 
 export default {
-  name: 'BNavbarItem',
   inheritAttrs: false, // 상위 스코프 속성에서 흘러 내려온 props 외 값들을 html 속성으로 루트 엘리먼트(여기선 component)에 적용하지 말라는 설정.
   props: {
     // navbar-item으로 렌더링 되어야할 컴포넌트의 타입을 지정.

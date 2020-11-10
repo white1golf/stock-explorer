@@ -29,7 +29,7 @@
           </router-link>
         </div>
         <div v-else class="navbar-end">
-          <Profile></Profile>
+          <LoggedInNav></LoggedInNav>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
 <script>
 import TheSearch from '@/components/TheSearch';
 import NavbarItem from '@/components/NavbarItem';
-import Profile from '@/components/Profile';
+import LoggedInNav from '@/components/LoggedInNav';
 import clickOutside from '../directives/clickOutside';
 import makePlaceHolder from '@cloudfour/simple-svg-placeholder';
 
@@ -53,7 +53,7 @@ const placeholder = makePlaceHolder({
 export default {
   components: {
     TheSearch,
-    Profile,
+    LoggedInNav,
     NavbarItem,
   },
   // 사용자 정의 지시어.
