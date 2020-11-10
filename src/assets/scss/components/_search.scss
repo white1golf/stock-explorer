@@ -16,6 +16,7 @@ $icon-size: 1rem;
   }
   .wrapper {
     display: flex;
+    flex-shrink: 1;
     border: 1px solid $border;
     padding: 0.2rem 1rem;
     padding-right: 0.2rem;
@@ -26,7 +27,7 @@ $icon-size: 1rem;
     }
   }
   .input {
-    width: 400px;
+    width: 265px;
     border: none;
     outline: none;
   }

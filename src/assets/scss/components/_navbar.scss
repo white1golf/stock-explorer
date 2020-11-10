@@ -1,13 +1,14 @@
 @import '../utils/all';
 
 $navbar-height: 3.25rem !default;
-$navbar-brand-logo-height: 60px !default;
+$navbar-brand-logo-height: 55px !default;
 $navbar-item-color: $text !default;
 $navbar-item-hover-color: $primary !default;
+$navbar-item-hover-bg-color: rgba(black, 0.05) !default;
 $navbar-background-color: white;
 $navbar-active-menu-color: $navbar-background-color;
 $navbar-burger-color: $navbar-item-color !default;
-$navbar-dropdown-menu-width: 130px;
+$navbar-dropdown-menu-width: 500px;
 $navbar-dropdown-menu-bg: white;
 
 $navbar-breakpoint: $tablet !default;
@@ -15,7 +16,8 @@ $navbar-breakpoint: $tablet !default;
 .navbar {
   display: flex;
   flex-direction: row;
-  min-height: 65px;
+  min-height: 55px;
+  margin-top: 0.5rem;
   .logo {
   }
   @include until($navbar-breakpoint) {
@@ -23,10 +25,16 @@ $navbar-breakpoint: $tablet !default;
       flex-direction: column;
     }
   }
+  &-start {
+    justify-content: center;
+    @include from($navbar-breakpoint) {
+      margin-left: auto;
+    }
+  }
   &-end {
+    margin-left: 0;
     display: flex;
     flex-direction: column;
-
     @include until($navbar-breakpoint) {
       padding: 1rem 0rem;
       width: 100%;
@@ -43,25 +51,31 @@ $navbar-breakpoint: $tablet !default;
       }
     }
   }
-  // &-menu {
-  //   display: none;
-  //   background-color: $navbar-active-menu-color;
-  //   width: 100%;
-  //   @include until($navbar-breakpoint) {
-  //     &.is-active {
-  //       display: flex;
-  //     }
-  //   }
-  //   @include from($navbar-breakpoint) {
-  //     display: flex;
-  //   }
-  // }
+  &-menu {
+    display: none;
+    background-color: $navbar-active-menu-color;
+    width: 100%;
+    @include until($navbar-breakpoint) {
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+      flex-direction: column;
+      &.is-active {
+        display: flex;
+      }
+    }
+    @include from($navbar-breakpoint) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
   &-item {
     &:hover,
     &:focus {
       color: $navbar-item-hover-color;
     }
-    color: $primary;
+    color: $navbar-item-color;
     font-size: 1.3em;
   }
   &-brand {
@@ -70,6 +84,7 @@ $navbar-breakpoint: $tablet !default;
     flex-shrink: 0;
     justify-content: center;
     min-height: $navbar-brand-logo-height;
+
     @include until($navbar-breakpoint) {
       width: 100%;
       align-items: center;
@@ -110,13 +125,14 @@ $navbar-breakpoint: $tablet !default;
         cursor: pointer;
         &.new {
           display: flex;
+          color: $primary;
           flex-shrink: 0;
           flex-grow: 0;
           justify-content: center;
           align-items: center;
           width: 40px;
           height: 40px;
-          border: 1px solid grey;
+          border: 1px solid $grey-light;
           border-radius: 50%;
           &:hover {
           }
@@ -124,18 +140,21 @@ $navbar-breakpoint: $tablet !default;
       }
 
       .navbar-dropdown {
+        @include shadow;
         display: flex;
         position: absolute;
         flex-direction: column;
         width: $navbar-dropdown-menu-width;
-        height: 150px;
+        height: 500px;
         border: 1px solid hsl(0, 0%, 86%);
         border-radius: 1rem;
         background: $navbar-dropdown-menu-bg;
         padding: 2rem;
         top: 40px;
         right: 0px;
-
+        & > .navbar-item:hover {
+          background-color: $navbar-item-hover-bg-color;
+        }
         &::after {
           content: '';
           display: inline-block;

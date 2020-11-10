@@ -6,10 +6,7 @@
   >
     <a
       class="navbar-link"
-      :class="{
-        wrapClass,
-        'is-active': isActive && collapsible,
-      }"
+      :class="[wrapClass, { 'is-active': isActive && collapsible }]"
       role="menuitem"
       aria-haspopup="true"
       href="#"
@@ -22,17 +19,23 @@
       class="navbar-dropdown"
     >
       <template v-for="item in items">
-        <router-link
+        <NavbarItem
           v-if="item.isRouterLink"
           :to="item.to"
-          class="menu-item"
+          class="navbar-item"
           :key="item.id"
         >
           {{ item.title }}
-        </router-link>
-        <a v-else class="logout menu-item" @click.stop="apiCall" :key="item.id">
+        </NavbarItem>
+
+        <NavbarItem
+          v-else
+          class="logout navbar-item"
+          @click.stop="apiCall"
+          :key="item.id"
+        >
           {{ item.title }}
-        </a>
+        </NavbarItem>
       </template>
     </div>
   </div>
@@ -40,8 +43,13 @@
 
 <script>
 import clickOutside from '../directives/clickOutside';
+import NavbarItem from '@/components/NavbarItem';
 
 export default {
+  components: {
+    NavbarItem,
+  },
+
   directives: {
     clickOutside,
   },

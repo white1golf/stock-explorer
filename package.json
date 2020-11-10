@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@cloudfour/simple-svg-placeholder": "^1.0.2",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-avatar": "^2.3.1",

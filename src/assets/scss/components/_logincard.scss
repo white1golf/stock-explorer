@@ -1,3 +1,4 @@
+@import '../utils/all';
 $grey-lighter: hsl(0, 0%, 86%) !default;
 $border-color: $grey-lighter;
 
@@ -5,6 +6,7 @@ $border-color: $grey-lighter;
   border: 1px solid hsl(0, 0%, 86%);
   border-radius: 1rem;
   background: white;
+  @include shadow;
   padding: 2rem;
   width: 500px;
   display: flex;

@@ -60,7 +60,7 @@ export default {
           'NavbarDropdown',
           'NavBar',
         ]);
-        if (parent && parent.$data._isNavbarDropdown)
+        if (parent && parent.$data.isNavbarDropdown)
           this.closeMenuRecursive(parent, ['NavBar']);
       }
     },
@@ -84,7 +84,7 @@ export default {
       const foundItem = targetComponents.reduce((acc, item) => {
         // 부모 컴포넌트 data 속성 판별. Navbar 또는 NavbarDropdown (_isNavbar, _isNavbarDropdown) 이여야만 closeMenu를 수행함.
         //
-        if (current.$parent.$data[`_is${item}`]) {
+        if (current.$parent.$data[`is${item}`]) {
           current.$parent.closeMenu();
           return current.$parent;
         }
