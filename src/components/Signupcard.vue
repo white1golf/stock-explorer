@@ -56,7 +56,7 @@
 </template>
 
 <script>
-const URL = process.env.URL ? process.env.URL : process.env.VUE_APP_URL;
+const URL = process.env.VUE_APP_URL_IP;
 
 export default {
   name: 'Signupcard',
@@ -77,6 +77,7 @@ export default {
   computed: {},
   methods: {
     async signup() {
+      console.log(URL);
       const response = await fetch(URL + '/auth/signup', {
         method: 'POST',
         headers: {
