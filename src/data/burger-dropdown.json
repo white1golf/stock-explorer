@@ -1,33 +1,21 @@
 {
-  "new": [
+  "option": [
     {
       "id": 0,
       "title": "새로운 모험1",
       "to": "/새로운모험1",
       "isRouterLink": true
-    },
-    {
-      "id": 1,
-      "title": "새로운 모험2",
-      "to": "/새로운모험2",
-      "isRouterLink": true
-    },
-    {
-      "id": 2,
-      "title": "새로운 모험3",
-      "to": "/새로운 모험3",
-      "isRouterLink": true
     }
   ],
   "profile": [
     {
-      "id": 0,
+      "id": 1,
       "title": "setting",
       "to": "/settings",
       "isRouterLink": true
     },
     {
-      "id": 1,
+      "id": 2,
       "title": "로그아웃",
       "isRouterLink": false,
       "isLogout": true

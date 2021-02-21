@@ -58,6 +58,7 @@ export default {
      * syncLogout의 경우 window에 eventLisener에 의해 등록되기 때문에
      * 실행 시 this가 변경되는 것을 방지하기 위해 this bind를 수행함.
      */
+    //this.logout = this.logout.bind(this);
     this.syncLogin = this.syncLogin.bind(this);
     this.syncLogout = this.syncLogout.bind(this);
   },

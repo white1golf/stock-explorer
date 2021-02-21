@@ -7,7 +7,7 @@
         </NavbarItem>
         <span
           class="navbar-burger"
-          :class="{ 'is-active': isOpened }"
+          :class="{ 'is-active': isBurgerOpen }"
           @click="toggleActive"
         >
           <span />
@@ -16,20 +16,21 @@
         </span>
       </div>
 
-      <div class="navbar-menu" :class="{ 'is-active': internalIsActive }">
+      <div class="navbar-menu" :class="{ 'is-active': isBurgerOpen }">
         <div class="navbar-start">
           <TheSearch />
         </div>
         <div v-if="!isAuthenticated" class="navbar-end">
+          <a href="#" @click.stop.prevent="clickTest" class="navbar-item"
+            >검색하기</a
+          >
           <router-link to="/signup" exact class="navbar-item">
             회원가입
           </router-link>
-          <router-link to="/login" class="navbar-item">
-            로그인
-          </router-link>
+          <router-link to="/login" class="navbar-item"> 로그인 </router-link>
         </div>
         <div v-else class="navbar-end">
-          <LoggedInNav></LoggedInNav>
+          <LoggedInNav />
         </div>
       </div>
     </div>
@@ -64,6 +65,7 @@ export default {
     return {
       isNavBar: true, //Used internally by NavbarItem.
       internalIsActive: this.active,
+      isBurgerOpen: false, //버거 메뉴를 위한 스위치
       imgSrc: placeholder,
     };
   },
@@ -83,18 +85,17 @@ export default {
     },
   },
   computed: {
-    isOpened() {
-      return this.internalIsActive;
-    },
-
     isAuthenticated() {
       return this.$store.state.isAuthenticated;
     },
   },
   methods: {
+    clickTest() {
+      alert('TODO: 검색 팝업 구현하기');
+    },
     // burger 에서 사용.
     toggleActive() {
-      this.internalIsActive = !this.internalIsActive;
+      this.isBurgerOpen = !this.isBurgerOpen;
     },
     // click-outside에서 사용.
     closeMenu() {
@@ -102,7 +103,10 @@ export default {
     },
   },
   mounted() {
-    this.$eventHub.$on('navigate', this.closeMenu);
+    // 원래 internalIsActive는 햄버거와 네브바 두 컴포넌트의 상태를 담당했음.
+    // 하지만 isBurgerOpen을 새로 추가했기에 만일 아래의 navigate 이벤트 일때 closeMenu가 실행이
+    // 버거까지 담당하도록 하려면 메소드 새로 만들 것.
+    //this.$eventHub.$on('navigate', this.closeMenu);
   },
 };
 </script>

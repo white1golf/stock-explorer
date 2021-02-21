@@ -13,6 +13,7 @@ export default {
     return fetch(URL + '/auth/logout', {
       method: 'POST',
       credentials: 'include', //반드시 필요함.
+      body: JSON.stringify({}),
     });
   },
   auth: function() {

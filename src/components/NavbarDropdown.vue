@@ -19,20 +19,16 @@
       class="navbar-dropdown"
     >
       <template v-for="item in items">
-        <NavbarItem
-          v-if="item.isRouterLink"
-          :to="item.to"
-          class="navbar-item"
-          :key="item.id"
-        >
+        <NavbarItem v-if="item.isRouterLink" :to="item.to" :key="item.id">
           {{ item.title }}
         </NavbarItem>
 
         <NavbarItem
           v-else
-          class="logout navbar-item"
-          @click.stop="apiCall"
+          :tag="div"
+          :isLogout="item.isLogout"
           :key="item.id"
+          @logout="logout"
         >
           {{ item.title }}
         </NavbarItem>
@@ -42,6 +38,7 @@
 </template>
 
 <script>
+import Constant from '../store/constant';
 import clickOutside from '../directives/clickOutside';
 import NavbarItem from '@/components/NavbarItem';
 
@@ -58,6 +55,7 @@ export default {
     return {
       isActive: this.active,
       isNavbarDropdown: true, //Used internally by NavbarItem.
+      div: 'div',
     };
   },
   props: {
@@ -76,15 +74,8 @@ export default {
     items: {
       type: Array,
       //오브젝트나 배열은 꼭 기본값을 반환하는 팩토리 함수의 형태로 사용되어야 함.
-      default: function() {
+      default: function () {
         return [];
-      },
-    },
-
-    apiCall: {
-      type: Object,
-      default: function() {
-        return console.log('apiCall should be injected!');
       },
     },
   },
@@ -97,6 +88,12 @@ export default {
     },
   },
   methods: {
+    //$root에 등록된 logout과 연결하자.
+    async logout() {
+      await this.$store.dispatch(Constant.LOGOUT);
+      window.localStorage.setItem('logout', Date.now());
+      this.$router.push('/login');
+    },
     showMenu() {
       this.isActive = true;
     },

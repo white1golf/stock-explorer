@@ -7,6 +7,7 @@
     }"
     v-bind="$attrs"
     v-on="$listeners"
+    @click="serve"
   >
     <slot />
   </component>
@@ -34,8 +35,19 @@ export default {
     },
     // 아이템이 활성 상태인지를 표시.
     active: Boolean,
+    // '로그아웃' 메뉴 인지 확인
+    isLogout: Boolean,
   },
   methods: {
+    /**
+     * logout 기능.
+     */
+    serve() {
+      if (this.isLogout) {
+        this.$emit('logout');
+        console.log('logout 클릭');
+      }
+    },
     /**
      * Keypress event that is bound to the document
      */
@@ -50,7 +62,7 @@ export default {
      */
     handleClickEvent(event) {
       const isOnWhiteList = clickableWhiteList.some(
-        item => item === event.target.localName
+        (item) => item === event.target.localName
       );
       // whitelist에 있는 엘리먼트(div, span, input)가 아니어야지만 closemenu를 수행할 것임.
       //

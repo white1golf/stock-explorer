@@ -13,6 +13,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      user: '',
+    };
+  },
   computed: {
     isAuthenticated() {
       return this.$store.state.isAuthenticated;
