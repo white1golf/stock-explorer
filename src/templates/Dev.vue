@@ -1,15 +1,15 @@
 <template>
-  <div class="container-v navbar">
-    <LoggedInNav> </LoggedInNav>
+  <div class="container-v">
+    <BasicEditor />
   </div>
 </template>
 
 <script>
-import LoggedInNav from '@/components/LoggedInNav';
+import BasicEditor from '@/components/Editor/BasicEditor';
 
 export default {
   components: {
-    LoggedInNav,
+    BasicEditor,
   },
 };
 </script>

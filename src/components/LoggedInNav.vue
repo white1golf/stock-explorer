@@ -21,7 +21,7 @@
         </NavbarItem>
         <NavbarItem
           v-else
-          :tag="tagDefault"
+          :tag="'div'"
           :isLogout="item.isLogout"
           :key="item.id"
           @logout="logout"
@@ -54,7 +54,6 @@ export default {
     return {
       menu: {},
       bgData: {},
-      tagDefault: 'div',
     };
   },
 

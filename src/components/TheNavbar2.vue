@@ -21,7 +21,7 @@
           <TheSearch />
         </div>
         <div v-if="!isAuthenticated" class="navbar-end">
-          <a href="#" @click.stop.prevent="clickTest" class="navbar-item"
+          <a href="#" @click.stop.prevent="clickTest" class="navbar-item search"
             >검색하기</a
           >
           <router-link to="/signup" exact class="navbar-item">

@@ -2,15 +2,14 @@
   "option": [
     {
       "id": 0,
-      "title": "새로운 모험1",
-      "to": "/새로운모험1",
-      "isRouterLink": true
+      "title": "검색하기",
+      "isRouterLink": false
     }
   ],
   "profile": [
     {
       "id": 1,
-      "title": "setting",
+      "title": "세팅",
       "to": "/settings",
       "isRouterLink": true
     },
