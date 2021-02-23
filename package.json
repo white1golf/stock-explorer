@@ -5,9 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "aws s3 sync ./dist s3://imadoer --profile=s3-static-deploy",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "aws s3 sync ./dist s3://imadoer --profile=s3-static-deploy"
   },
   "dependencies": {
     "@cloudfour/simple-svg-placeholder": "^1.0.2",
@@ -35,6 +35,9 @@
     "node-sass": "^4.12.0",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
+    "svgo": "^1.1.0",
+    "svgo-loader": "^2.1.0",
+    "vue-cli-plugin-svg-sprite": "~1.0.0",
     "vue-template-compiler": "^2.6.11"
   }
 }

@@ -62,7 +62,7 @@ export default {
      */
     handleClickEvent(event) {
       const isOnWhiteList = clickableWhiteList.some(
-        (item) => item === event.target.localName
+        item => item === event.target.localName
       );
       // whitelist에 있는 엘리먼트(div, span, input)가 아니어야지만 closemenu를 수행할 것임.
       //

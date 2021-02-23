@@ -74,7 +74,7 @@ export default {
     items: {
       type: Array,
       //오브젝트나 배열은 꼭 기본값을 반환하는 팩토리 함수의 형태로 사용되어야 함.
-      default: function () {
+      default: function() {
         return [];
       },
     },
