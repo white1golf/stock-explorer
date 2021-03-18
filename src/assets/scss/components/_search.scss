@@ -1,9 +1,20 @@
-@import '../utils/all';
+/**
+기존에 utils/all 로 끌어오던 것 고작
+아래 2번째 문단 5줄로 해결됨 그냥 resolve됨.
+sass import 관련해서 에러도 있고 조금 성가셔서 resolve 했는데
+다른 컴포넌트들도 그럴 필요가 있을 것.
 
+*/
 $search-border-color: #3f3f3f;
 $search-icon-background: #cfcfcf;
 $icon-background-size: 2.5rem;
 $icon-size: 1rem;
+
+$primary: #ff585d;
+$dark: hsl(0, 0%, 29%) !default;
+$border: hsl(0, 0%, 71%) !default;
+$border-hover: hsl(0, 0%, 86%) !default;
+$text-light: hsl(0, 0%, 48%) !default;
 
 .search {
   &.is-active {

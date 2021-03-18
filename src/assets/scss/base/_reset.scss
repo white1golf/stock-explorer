@@ -49,6 +49,11 @@ form {
   margin-bottom: 0;
 }
 
+/**
+Editor 내의 버튼에 이 태그가 적용됨.
+처음엔 지웠었는데 나름 편리한 것 같아서 이거 살려두고
+Editor 내에서의 버튼에만 hover 을 필터를 없애야 할 것 같음.
+*/
 button {
   padding: 0;
   border: 1px solid transparent;
@@ -108,8 +113,3 @@ a {
     color: black;
   }
 }
-
-// ::selection {
-//   background: #ff585d;
-//   color: white;
-// }

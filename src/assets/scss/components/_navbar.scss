@@ -16,8 +16,8 @@ $navbar-breakpoint: $tablet !default;
 .navbar {
   display: flex;
   flex-direction: row;
+
   min-height: 55px;
-  margin-top: 0.5rem;
   .logo {
   }
   @include until($navbar-breakpoint) {
@@ -30,6 +30,7 @@ $navbar-breakpoint: $tablet !default;
     @include from($navbar-breakpoint) {
       display: flex;
       justify-content: center;
+
       margin-left: auto;
     }
   }
@@ -88,7 +89,7 @@ $navbar-breakpoint: $tablet !default;
     display: flex;
     align-items: stretch;
     flex-shrink: 0;
-    justify-content: center;
+    align-items: center;
     min-height: $navbar-brand-logo-height;
 
     @include until($navbar-breakpoint) {
