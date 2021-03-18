@@ -1,205 +1,89 @@
 <template>
   <div>
-    <EditorMenuBar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="menubar">
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bold() }"
-          @click="commands.bold"
-        >
-          <icon name="bold" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.italic() }"
-          @click="commands.italic"
-        >
-          <icon name="italic" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
-          @click="commands.strike"
-        >
-          <icon name="strike" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.underline() }"
-          @click="commands.underline"
-        >
-          <icon name="underline" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.code() }"
-          @click="commands.code"
-        >
-          <icon name="code" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.paragraph() }"
-          @click="commands.paragraph"
-        >
-          <icon name="paragraph" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          @click="commands.heading({ level: 1 })"
-        >
-          H1
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-          @click="commands.heading({ level: 2 })"
-        >
-          H2
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-          @click="commands.heading({ level: 3 })"
-        >
-          H3
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bullet_list() }"
-          @click="commands.bullet_list"
-        >
-          <icon name="ul" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.ordered_list() }"
-          @click="commands.ordered_list"
-        >
-          <icon name="ol" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.blockquote() }"
-          @click="commands.blockquote"
-        >
-          <icon name="quote" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.code_block() }"
-          @click="commands.code_block"
-        >
-          <icon name="code" />
-        </button>
-
-        <button class="menubar__button" @click="commands.horizontal_rule">
-          <icon name="hr" />
-        </button>
-
-        <button class="menubar__button" @click="commands.undo">
-          <icon name="undo" />
-        </button>
-
-        <button class="menubar__button" @click="commands.redo">
-          <icon name="redo" />
-        </button>
-      </div>
-    </EditorMenuBar>
-    <EditorContent class="editor__content" :editor="editor" />
+    <div
+      class="flex flex-row justify-center my-4 rounded-md border-solid border border-gray-200 bg-red-100"
+    >
+      공사중
+    </div>
+    <div
+      class="editor flex flex-col max-w-md mx-auto rounded-md border-solid border border-gray-100 border-opacity-20 p-4 space-y-2 shadow-md"
+    >
+      <EditorContent class="editor__content" :editor="editor" />
+    </div>
   </div>
 </template>
 
 <script>
 import Icon from '@/components/Editor/Icon';
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import { Editor, EditorContent } from 'tiptap';
 import {
-  Blockquote,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  HorizontalRule,
   OrderedList,
   BulletList,
   ListItem,
-  TodoItem,
-  TodoList,
   Bold,
-  Code,
   Italic,
-  Link,
   Strike,
   Underline,
   History,
+  Placeholder,
 } from 'tiptap-extensions';
+
+import Doc from '@/tt/Doc';
+import Title from '@/tt/Title';
+
 export default {
   components: {
     EditorContent,
-    EditorMenuBar,
-    Icon,
   },
   data() {
     return {
       editor: new Editor({
+        autoFocus: true,
         extensions: [
-          new Blockquote(),
+          new Doc(),
+          new Title(),
+          new Placeholder({
+            showOnlyCurrent: false,
+            emptyNodeText: (node) => {
+              if (node.type.name === 'title') {
+                return '제목은 여기다 와요';
+              }
+              return '내용을 입력해주세요';
+            },
+          }),
           new BulletList(),
-          new CodeBlock(),
-          new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
-          new HorizontalRule(),
           new ListItem(),
           new OrderedList(),
-          new TodoItem(),
-          new TodoList(),
-          new Link(),
           new Bold(),
-          new Code(),
           new Italic(),
           new Strike(),
           new Underline(),
           new History(),
         ],
-        content: `
-          <h2>
-            Hi there,
-          </h2>
-          <p>
-            this is a very <em>basic</em> example of tiptap.
-          </p>
-          <pre><code>body { display: none; }</code></pre>
-          <ul>
-            <li>
-              A regular list
-            </li>
-            <li>
-              With regular items
-            </li>
-          </ul>
-          <blockquote>
-            It's amazing 👏
-            <br />
-            – mom
-          </blockquote>
-        `,
       }),
     };
   },
   beforeDestroy() {
+    //에디터 destroy 시키는 거 잊지말길.
     this.editor.destroy();
   },
 };
 </script>
+<style lang="postcss">
+.menubar__button.is-active {
+  @apply bg-indigo-500 text-white;
+}
+.menubar__button {
+  @apply p-1 bg-white border-solid border-transparent rounded-md;
+}
+
+.editor *.is-empty:nth-child(1)::before,
+.editor *.is-empty:nth-child(2)::before {
+  content: attr(data-empty-text);
+  float: left;
+  color: #aaa;
+  pointer-events: none;
+  height: 0;
+  font-style: italic;
+}
+</style>
