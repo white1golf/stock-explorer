@@ -4,20 +4,18 @@
     :class="[`icon--${name}`, `icon--${size}`, { 'has-align-fix': fixAlign }]"
   >
     <svg class="icon__svg">
-      <use :xlink:href="iconPath" xmlns:xlink="http://www.w3.org/1999/xlink" />
+      <use
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        :xlink:href="'#icon--' + name"
+      ></use>
     </svg>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'svg-icon',
-
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
+    name: {},
     size: {
       default: 'normal',
     },
@@ -26,15 +24,6 @@ export default {
     },
     fixAlign: {
       default: true,
-    },
-  },
-  computed: {
-    iconPath() {
-      let icon = require(`@/assets/icons/${this.name}.svg`);
-      if (Object.prototype.hasOwnProperty.call(icon, 'default')) {
-        icon = icon.default;
-      }
-      return icon.url;
     },
   },
 };

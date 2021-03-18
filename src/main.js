@@ -2,14 +2,15 @@ import Vue from 'vue';
 import App from './App.vue';
 import store from './store';
 import router from './router';
-import svgSpriteLoader from './helpers/svg-sprite-loader';
+import './assets/tailwind.css';
+// import svgSpriteLoader from './helpers/svg-sprite-loader';
 
-const __svg__ = {
-  path: './assets/icons/*.svg',
-  name: 'assets/icons/[hash].sprite.svg',
-};
+// const __svg__ = {
+//   path: './assets/icons/*.svg',
+//   name: 'assets/icons/[hash].sprite.svg',
+// };
 
-svgSpriteLoader(__svg__.filename);
+// svgSpriteLoader(__svg__.filename);
 
 Vue.config.productionTip = false;
 
