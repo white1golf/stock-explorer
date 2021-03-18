@@ -1,13 +1,13 @@
 <template>
   <div class="c">
     <div class="c__title">
-      <h2>언제나 환영이야!🧐</h2>
-      <h3>회원등록</h3>
+      <h2 class="text-2xl text-gray-700">회원 등록</h2>
+      <h3 class="text-sm font-bold text-gray-400">언제나 환영이야! 🧐</h3>
     </div>
     <div class="c__body">
       <form @submit.prevent="signup">
         <div class="c__field">
-          <label class="c__field__label" for>이메일</label>
+          <label class="c__field__label">이메일</label>
           <div
             :class="{
               c__field__control: !isEmailFocused,
@@ -47,8 +47,12 @@
           </p>
           <p class="c__field__help" v-show="visiblePwdHelp">{{ pwdHelpMsg }}</p>
         </div>
-        <div class="c__field">
+        <div class="c__field mt-8">
           <button>가입하기</button>
+          <p>
+            회원이신가요?
+            <router-link to="/login"> 로그인 </router-link>
+          </p>
         </div>
       </form>
     </div>

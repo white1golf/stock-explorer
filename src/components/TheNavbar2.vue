@@ -1,12 +1,12 @@
 <template>
-  <nav class="navbar" v-click-outside="closeMenu">
+  <nav class="navbar p-2" v-click-outside="closeMenu">
     <div class="container">
-      <div class="navbar-brand">
-        <NavbarItem href="#">
-          <img :src="imgSrc" />
-        </NavbarItem>
+      <div class="navbar-brand" id="logo">
+        <a href="/" class="text-3xl uppercase text-indigo-700 ml-6">
+          Imadoer
+        </a>
         <span
-          class="navbar-burger"
+          class="navbar-burger mr-6"
           :class="{ 'is-active': isBurgerOpen }"
           @click="toggleActive"
         >
@@ -39,23 +39,21 @@
 
 <script>
 import TheSearch from '@/components/TheSearch';
-import NavbarItem from '@/components/NavbarItem';
 import LoggedInNav from '@/components/LoggedInNav';
 import clickOutside from '../directives/clickOutside';
-import makePlaceHolder from '@cloudfour/simple-svg-placeholder';
+// import makePlaceHolder from '@cloudfour/simple-svg-placeholder';
 
-const placeholder = makePlaceHolder({
-  width: 65,
-  height: 50,
-  bgColor: '#0F1C3F',
-  textColor: '#7FDBFF',
-});
+// const placeholder = makePlaceHolder({
+//   width: 65,
+//   height: 50,
+//   bgColor: '#0F1C3F',
+//   textColor: '#7FDBFF',
+// });
 
 export default {
   components: {
     TheSearch,
     LoggedInNav,
-    NavbarItem,
   },
   // 사용자 정의 지시어.
   directives: {
@@ -66,7 +64,7 @@ export default {
       isNavBar: true, //Used internally by NavbarItem.
       internalIsActive: this.active,
       isBurgerOpen: false, //버거 메뉴를 위한 스위치
-      imgSrc: placeholder,
+      // imgSrc: placeholder,
     };
   },
   props: {

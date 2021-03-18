@@ -1,8 +1,8 @@
 <template>
   <div class="c">
     <div class="c__title">
-      <h2>환영합니다! 😆</h2>
-      <h3>로그인 해주세요</h3>
+      <h2 class="text-2xl text-gray-700">로그인</h2>
+      <h3 class="text-sm font-bold text-gray-400">환영합니다! 😆</h3>
     </div>
     <div class="c__body">
       <form @submit.prevent="login">
@@ -51,9 +51,7 @@
           <button>로그인</button>
           <p>
             계정이 필요한가요?
-            <router-link to="/signup">
-              가입하기
-            </router-link>
+            <router-link to="/signup"> 가입하기 </router-link>
           </p>
         </div>
       </form>
