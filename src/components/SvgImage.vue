@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="icon"
-    :class="[`icon--${name}`, `icon--${size}`, { 'has-align-fix': fixAlign }]"
-  >
-    <svg class="icon__svg">
+  <div class="svg-img" :class="[`svg-img-${name}`]">
+    <svg class="svg-img__svg">
       <use :xlink:href="iconPath" xmlns:xlink="http://www.w3.org/1999/xlink" />
     </svg>
   </div>
@@ -11,21 +8,12 @@
 
 <script>
 export default {
-  name: 'svg-icon',
+  name: 'svg-Image',
 
   props: {
     name: {
       type: String,
       required: true,
-    },
-    size: {
-      default: 'normal',
-    },
-    modifier: {
-      default: null,
-    },
-    fixAlign: {
-      default: true,
     },
   },
   computed: {
@@ -41,44 +29,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
+.svg-img {
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  width: 0.8rem;
-  height: 0.8rem;
-  margin: 0 0.3rem;
+  height: auto;
+  margin: 0;
   top: -0.02rem;
   fill: currentColor;
-  // &.has-align-fix {
-  // 	top: -.1rem;
-  // }
+
   &__svg {
     display: inline-block;
     vertical-align: top;
     width: 100%;
     height: 100%;
-  }
-  &:first-child {
-    margin-left: 0;
-  }
-  &:last-child {
-    margin-right: 0;
-  }
-}
-// svg sprite
-body > svg,
-.icon use > svg,
-symbol {
-  path,
-  rect,
-  circle,
-  g {
-    fill: currentColor;
-    stroke: none;
-  }
-  *[d='M0 0h24v24H0z'] {
-    display: none;
   }
 }
 </style>
