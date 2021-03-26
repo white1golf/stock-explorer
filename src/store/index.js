@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Constant from './constant';
 import authAPI from '../api/authAPI';
+import articleAPI from '../services/articleAPI';
+
 import { isEmpty } from '@/utils/utils.js';
 
 Vue.use(Vuex);

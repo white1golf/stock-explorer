@@ -1,15 +1,17 @@
 <template>
-  <PostCard />
+  <div class="posts-list">
+    <PostCard v-for="post in posts" :key="post.id" />
+  </div>
 </template>
 
 <script>
-//import EditorWrapper from '@/components/Editor/EditorWrapper';
-//import BasicEditor from '@/components/Editor/BasicEditor';
 import PostCard from '@/components/Editor/PostCard';
-
 export default {
   components: {
     PostCard,
   },
 };
 </script>
+
+<style>
+</style>

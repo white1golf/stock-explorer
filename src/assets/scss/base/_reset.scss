@@ -26,28 +26,30 @@ img {
   max-width: 100%;
   display: block;
 }
+/**
+에디터에 list 기능 추가 하므로 reset 했던 거 복원 .
 
-ul,
-li {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  /*double click hilighting deactivate*/
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-/*nested list는 margin-bottom 0*/
-ul ul,
-ul li,
-li ul,
-li li,
-form {
-  margin-bottom: 0;
-}
+// ul,
+// li {
+//   margin: 0;
+//   padding: 0;
+//   list-style-type: none;
+//   /*double click hilighting deactivate*/
+//   -webkit-touch-callout: none;
+//   -webkit-user-select: none;
+//   -khtml-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+// }
+// /*nested list는 margin-bottom 0*/
+// ul ul,
+// ul li,
+// li ul,
+// li li,
+// form {
+//   margin-bottom: 0;
+// }
 
 /**
 Editor 내의 버튼에 이 태그가 적용됨.
