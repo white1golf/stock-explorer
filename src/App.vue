@@ -66,7 +66,7 @@ export default {
   async mounted() {
     interval = window.setInterval(() => {
       this.$store.dispatch(Constant.SILENT_REFRESH);
-    }, 60000);
+    }, 60000); //1분 마다 실행.
     window.addEventListener('storage', this.syncLogin);
     window.addEventListener('storage', this.syncLogout);
     //해쉬로 가기?

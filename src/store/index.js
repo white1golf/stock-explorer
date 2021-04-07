@@ -19,8 +19,6 @@ export default new Vuex.Store({
     jwtToken: '',
     jwtTokenExpiry: 0,
     inMemoryToken: {},
-    refreshToken: '',
-    refreshTokenExpiry: 0,
     res: {},
   },
 
@@ -28,10 +26,6 @@ export default new Vuex.Store({
     [Constant.LOGOUT]: (state, payload) => {
       state.inMemoryToken = {};
       state.res = payload;
-      state.jwtToken = '';
-      state.jwtTokenExpiry = 0;
-      state.refreshToken = '';
-      state.refreshTokenExpiry = 0;
       state.user = {};
       state.isAuthenticated = false;
     },
@@ -42,21 +36,13 @@ export default new Vuex.Store({
 
     //payload의 response 값이 200 일 때만 호출 됨.
     [Constant.FETCH_AUTH]: (state, payload) => {
-      const {
-        jwt_token,
-        refresh_token,
-        jwt_token_expiry,
-        refresh_token_expiry,
-        user_id,
-      } = payload; //payload 는 res.json()의 결과값.
+      const { jwt_token, jwt_token_expiry, user_id } = payload; //payload 는 res.json()의 결과값.
       state.inMemoryToken = {
         token: jwt_token,
         expiry: jwt_token_expiry,
       };
       state.jwtToken = jwt_token;
       state.jwtTokenExpiry = jwt_token_expiry;
-      state.refreshToken = refresh_token;
-      state.refreshTokenExpiry = refresh_token_expiry;
       state.user = { id: user_id };
       state.isAuthenticated = true;
     },
@@ -138,7 +124,7 @@ export default new Vuex.Store({
       if (!isEmpty(store.state.inMemoryToken)) {
         if (
           //호출 상황: setInterval에 의해 등록된 콜백.
-          //만료시간 1분 이하.
+          //만료시간 1분 이하 일때만 실제 silent refresh 가 수행됨.
           subMinutes(new Date(store.state.inMemoryToken.expiry), 1) <=
           new Date(store.state.inMemoryToken.expiry)
         ) {
